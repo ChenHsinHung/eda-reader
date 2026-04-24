@@ -48,6 +48,55 @@ python setup.py
 
 ## 使用方法
 
+### 快速啟動 (推薦)
+
+**啟動 Web 介面:**
+```bash
+# 雙擊 start_web.bat 或在命令提示字元中執行
+start_web.bat
+```
+然後在瀏覽器開啟 `http://127.0.0.1:8080`
+
+**通用運行:**
+```bash
+# 雙擊 run.bat 或在命令提示字元中執行
+run.bat main.py [參數]
+```
+
+### 手動啟動
+
+**啟動 Web 介面:**
+```bash
+# 激活虛擬環境
+venv\Scripts\activate
+
+# 啟動 Web 介面
+python main.py --web
+```
+
+**命令列模式:**
+```bash
+# 激活虛擬環境
+venv\Scripts\activate
+
+# 測試模式 (不會實際執行)
+python main.py --dry-run
+
+# 指定課程
+python main.py --courses "課程名稱關鍵字"
+
+# 限制課程數量
+python main.py --max-courses 5
+```
+
+### Web 介面功能
+
+1. **課程列表**: 顯示所有可用課程
+2. **開始學習**: 一鍵開始自動學習
+3. **實時日誌**: 查看詳細操作日誌
+4. **進度監控**: 實時顯示學習進度
+5. **停止控制**: 可隨時停止學習過程
+
 ### 命令行模式
 ```bash
 # 處理所有可用課程

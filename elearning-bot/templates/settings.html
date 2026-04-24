@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設定 - eLearning Bot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .alert {
+            border-radius: 0.375rem;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">
+                <i class="fas fa-robot"></i> eLearning Bot - 設定
+            </span>
+            <div class="d-flex">
+                <a href="/" class="btn btn-outline-light">
+                    <i class="fas fa-home"></i> 返回主頁
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- 帳號設定 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-user-shield"></i> 帳號設定
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="credentialsStatus" class="alert alert-info">
+                            <i class="fas fa-spinner fa-spin"></i> 檢查帳號狀態中...
+                        </div>
+
+                        <!-- 帳號設定表單 -->
+                        <form id="credentialsForm" style="display: none;">
+                            <div class="mb-3">
+                                <label for="accountId" class="form-label">
+                                    身分證字號 (ID) <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="accountId" maxlength="10"
+                                       placeholder="請輸入10位身分證字號" required>
+                                <div class="form-text">您的 elearning.taipei 帳號</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">
+                                    密碼 <span class="text-danger">*</span>
+                                </label>
+                                <input type="password" class="form-control" id="password"
+                                       placeholder="請輸入密碼" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="passwordConfirm" class="form-label">
+                                    確認密碼 <span class="text-danger">*</span>
+                                </label>
+                                <input type="password" class="form-control" id="passwordConfirm"
+                                       placeholder="請再次輸入密碼" required>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary" id="saveBtn">
+                                    <i class="fas fa-save"></i> 儲存帳號
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" id="resetBtn">
+                                    <i class="fas fa-trash"></i> 重設帳號
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 系統設定 -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-cogs"></i> 系統設定
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="configForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">影片完成門檻 (%)</label>
+                                        <input type="number" class="form-control" id="videoThreshold" min="1" max="100" value="90">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">播放速度</label>
+                                        <select class="form-select" id="playbackSpeed">
+                                            <option value="1">1x (正常)</option>
+                                            <option value="1.25">1.25x</option>
+                                            <option value="1.5">1.5x</option>
+                                            <option value="2">2x</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="autoAnswerQuiz">
+                                    <label class="form-check-label" for="autoAnswerQuiz">
+                                        自動作答測驗
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="enableHeadless" checked>
+                                    <label class="form-check-label" for="enableHeadless">
+                                        後台運行模式 (無頭模式)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-secondary">
+                                <i class="fas fa-save"></i> 儲存設定
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入 Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 自訂 JS -->
+    <script>
+        // 檢查帳號狀態
+        async function checkCredentialsStatus() {
+            try {
+                const response = await fetch('/api/credentials');
+                const data = await response.json();
+
+                const statusDiv = document.getElementById('credentialsStatus');
+                const form = document.getElementById('credentialsForm');
+
+                if (data.exists) {
+                    statusDiv.className = 'alert alert-success';
+                    statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> 帳號已設定完成';
+                    form.style.display = 'none';
+                } else {
+                    statusDiv.className = 'alert alert-warning';
+                    statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 尚未設定帳號，請填寫下方表單';
+                    form.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error checking credentials:', error);
+                document.getElementById('credentialsStatus').className = 'alert alert-danger';
+                document.getElementById('credentialsStatus').innerHTML = '<i class="fas fa-times-circle"></i> 檢查帳號狀態失敗';
+            }
+        }
+
+        // 儲存帳號
+        async function saveCredentials(accountId, password, passwordConfirm) {
+            try {
+                const response = await fetch('/api/credentials', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        account_id: accountId,
+                        password: password,
+                        password_confirm: passwordConfirm
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('帳號儲存成功！');
+                    checkCredentialsStatus();
+                } else {
+                    alert('儲存失敗：' + data.error);
+                }
+            } catch (error) {
+                console.error('Error saving credentials:', error);
+                alert('儲存失敗：網路錯誤');
+            }
+        }
+
+        // 重設帳號
+        async function resetCredentials() {
+            if (!confirm('確定要重設帳號嗎？這將刪除已儲存的帳號資訊。')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/credentials', {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('帳號已重設');
+                    checkCredentialsStatus();
+                } else {
+                    alert('重設失敗：' + data.error);
+                }
+            } catch (error) {
+                console.error('Error resetting credentials:', error);
+                alert('重設失敗：網路錯誤');
+            }
+        }
+
+        // 載入設定
+        async function loadConfig() {
+            try {
+                const response = await fetch('/api/config');
+                const config = await response.json();
+
+                document.getElementById('videoThreshold').value = config.videoCompletionThreshold * 100;
+                document.getElementById('playbackSpeed').value = config.playbackSpeed;
+                document.getElementById('autoAnswerQuiz').checked = config.autoAnswerQuiz;
+                document.getElementById('enableHeadless').checked = config.enableHeadless;
+            } catch (error) {
+                console.error('Error loading config:', error);
+            }
+        }
+
+        // 儲存設定
+        async function saveConfig() {
+            // 目前設定儲存功能尚未實現
+            alert('設定儲存功能即將推出');
+        }
+
+        // 頁面載入完成後執行
+        document.addEventListener('DOMContentLoaded', function() {
+            checkCredentialsStatus();
+            loadConfig();
+
+            // 帳號表單提交
+            document.getElementById('credentialsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const accountId = document.getElementById('accountId').value;
+                const password = document.getElementById('password').value;
+                const passwordConfirm = document.getElementById('passwordConfirm').value;
+
+                if (password !== passwordConfirm) {
+                    alert('密碼確認不相符');
+                    return;
+                }
+
+                saveCredentials(accountId, password, passwordConfirm);
+            });
+
+            // 重設按鈕
+            document.getElementById('resetBtn').addEventListener('click', resetCredentials);
+
+            // 設定表單提交
+            document.getElementById('configForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveConfig();
+            });
+        });
+    </script>
+</body>
+</html>

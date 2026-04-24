@@ -126,6 +126,52 @@ class WebInterface:
             except Exception as e:
                 return jsonify({'error': str(e)}), 500
 
+        @self.app.route('/settings')
+        def settings():
+            """Settings page"""
+            return render_template('settings.html')
+
+        @self.app.route('/api/credentials', methods=['GET', 'POST', 'DELETE'])
+        def credentials():
+            """Manage credentials"""
+            try:
+                manager = get_credential_manager()
+
+                if request.method == 'GET':
+                    # Check if credentials exist
+                    exists = manager.credentials_exist()
+                    return jsonify({'exists': exists})
+
+                elif request.method == 'POST':
+                    # Save new credentials
+                    data = request.get_json()
+                    account_id = data.get('account_id', '').strip()
+                    password = data.get('password', '').strip()
+                    password_confirm = data.get('password_confirm', '').strip()
+
+                    # Validate input
+                    if not account_id or not password:
+                        return jsonify({'error': 'Account ID and password are required'}), 400
+
+                    if len(account_id) != 10:
+                        return jsonify({'error': 'Account ID must be 10 characters (Taiwanese ID format)'}), 400
+
+                    if password != password_confirm:
+                        return jsonify({'error': 'Passwords do not match'}), 400
+
+                    # Save credentials
+                    manager.save_credentials(account_id, password)
+                    return jsonify({'message': 'Credentials saved successfully'})
+
+                elif request.method == 'DELETE':
+                    # Reset credentials
+                    manager.reset_credentials()
+                    return jsonify({'message': 'Credentials reset successfully'})
+
+            except Exception as e:
+                self.logger.error(f"Credentials management error: {e}")
+                return jsonify({'error': str(e)}), 500
+
         @self.app.route('/api/config', methods=['GET', 'POST'])
         def config():
             """Get or update configuration"""

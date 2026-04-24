@@ -9,6 +9,7 @@ class ELearningBotUI {
 
     init() {
         this.bindElements();
+        this.checkCredentials();
         this.connectSocket();
         this.loadCourses();
         this.setupEventListeners();
@@ -31,6 +32,35 @@ class ELearningBotUI {
             refreshBtn: document.getElementById('refreshBtn'),
             loadingOverlay: document.getElementById('loadingOverlay')
         };
+    }
+
+    async checkCredentials() {
+        try {
+            const response = await fetch('/api/credentials');
+            const data = await response.json();
+
+            if (!data.exists) {
+                // Show warning if no credentials are set
+                this.showCredentialsWarning();
+            }
+        } catch (error) {
+            console.error('Error checking credentials:', error);
+        }
+    }
+
+    showCredentialsWarning() {
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-warning alert-dismissible fade show';
+        alert.innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>尚未設定帳號！</strong>
+            請先到 <a href="/settings" class="alert-link">設定頁面</a> 輸入您的 elearning.taipei 帳號密碼。
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+
+        // Insert at the top of the container
+        const container = document.querySelector('.container-fluid');
+        container.insertBefore(alert, container.firstChild);
     }
 
     connectSocket() {
