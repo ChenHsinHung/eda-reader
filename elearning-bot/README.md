@@ -15,7 +15,7 @@
 - 🎮 **一鍵操作**: 簡單的開始/停止控制
 ## 系統要求
 
-- **作業系統**: Windows 10/11 (64-bit)
+- **作業系統**: Windows 10/11 (64-bit) / macOS 10.13+ / Linux
 - **Python**: 3.9 或以上
 - **記憶體**: 至少 4GB RAM
 - **網路**: 穩定網路連線
@@ -28,10 +28,35 @@
 - 驗證安裝: 開啟命令提示字元，執行 `python --version`
 
 ### 2. 安裝 Tesseract OCR
+
+#### Windows
 從 [GitHub](https://github.com/UB-Mannheim/tesseract/wiki) 下載並安裝 Tesseract-OCR
 - 選擇 `tesseract-ocr-w64-setup-v5.x.exe`
 - 安裝到預設位置: `C:\Program Files\Tesseract-OCR`
 - 驗證安裝: 開啟命令提示字元，執行 `tesseract --version`
+
+#### macOS
+使用 Homebrew 安裝 Tesseract：
+```bash
+# 如果沒有安裝 Homebrew，先安裝
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 安裝 Tesseract
+brew install tesseract
+
+# 驗證安裝
+tesseract --version
+```
+
+#### Linux
+```bash
+# Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install tesseract-ocr
+
+# 驗證安裝
+tesseract --version
+```
 
 ### 3. 安裝依賴包
 ```bash
@@ -50,6 +75,7 @@ python setup.py
 
 ### 快速啟動 (推薦)
 
+#### Windows
 **啟動 Web 介面:**
 ```bash
 # 雙擊 start_web.bat 或在命令提示字元中執行
@@ -57,14 +83,22 @@ start_web.bat
 ```
 然後在瀏覽器開啟 `http://127.0.0.1:8080`
 
-**通用運行:**
+#### macOS / Linux
+**啟動 Web 介面:**
 ```bash
-# 雙擊 run.bat 或在命令提示字元中執行
-run.bat main.py [參數]
+# 執行啟動腳本
+bash start_web.sh
 ```
+然後在瀏覽器開啟 `http://127.0.0.1:8080`
+
+**通用運行:**
+
+- **Windows**: 雙擊 `run.bat` 或執行 `run.bat main.py [參數]`
+- **macOS/Linux**: 執行 `bash run.sh main.py [參數]`
 
 ### 手動啟動
 
+#### Windows
 **啟動 Web 介面:**
 ```bash
 # 激活虛擬環境
@@ -74,10 +108,37 @@ venv\Scripts\activate
 python main.py --web
 ```
 
+#### macOS / Linux
+**啟動 Web 介面:**
+```bash
+# 激活虛擬環境
+source venv/bin/activate
+
+# 啟動 Web 介面
+python main.py --web
+```
+
 **命令列模式:**
+
+Windows:
 ```bash
 # 激活虛擬環境
 venv\Scripts\activate
+
+# 測試模式 (不會實際執行)
+python main.py --dry-run
+
+# 指定課程
+python main.py --courses "課程名稱關鍵字"
+
+# 限制課程數量
+python main.py --max-courses 5
+```
+
+macOS / Linux:
+```bash
+# 激活虛擬環境
+source venv/bin/activate
 
 # 測試模式 (不會實際執行)
 python main.py --dry-run

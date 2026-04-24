@@ -84,9 +84,11 @@ def preprocess_image_for_ocr(image_path):
 def recognize_captcha(image_path):
     """Recognize captcha using Tesseract OCR"""
     try:
-        # Set Tesseract path for Windows
-        if os.name == 'nt':  # Windows
-            pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+        # Set Tesseract path on all platforms
+        # Windows: C:\Program Files\Tesseract-OCR\tesseract.exe
+        # macOS: /usr/local/bin/tesseract or /opt/homebrew/bin/tesseract (M1/M2)
+        # Linux: /usr/bin/tesseract
+        pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
         # Preprocess image
         processed_image = preprocess_image_for_ocr(image_path)
